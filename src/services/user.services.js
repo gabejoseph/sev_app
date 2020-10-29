@@ -10,21 +10,21 @@ const topics = data.topics
 
 function transform() {
     data.users.map(user => {
-        return [weeklyGoals(user), dailyAssessment(user), weeklyReflection(user)]
+        console.log(topics)
     })
 }
 
-function weeklyGoals(user) {
+function goals(user) {
+    
+}
+
+function assessments(user) {
 
 }
 
-function dailyAssessment(user) {
-     
-}
+function reflections(user) {
 
-function weeklyReflection(user) {
-
-}
+} 
 
 function postPayload() {
 
