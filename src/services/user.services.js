@@ -16,12 +16,22 @@ function transform() {
 
 function handleLogic(user) {
     topics.map(topic => {
-        return {
+        const payload = [{
             name: "Weekly Goals",
             topic: `${topic._id}`,
             status: "waiting",
             user: `${user._id}`
-        }
+        },
+        {
+
+        },
+        {
+            name: "Weekly Reflection",
+            topic: `${topic._id}`,
+            status: "waiting",
+            user: `${user._id}`
+        }]
+        console.log(payload)
     })
 }
 
