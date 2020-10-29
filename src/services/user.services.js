@@ -10,21 +10,20 @@ const topics = data.topics
 
 function transform() {
     data.users.map(user => {
-        console.log(topics)
+        handleLogic(user)
     })
 }
 
-function goals(user) {
-    
+function handleLogic(user) {
+    topics.map(topic => {
+        return {
+            name: "Weekly Goals",
+            topic: `${topic._id}`,
+            status: "waiting",
+            user: `${user._id}`
+        }
+    })
 }
-
-function assessments(user) {
-
-}
-
-function reflections(user) {
-
-} 
 
 function postPayload() {
 
