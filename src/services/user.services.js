@@ -6,8 +6,28 @@ export const services = {
     transform
 }
 
+const topics = data.topics
+
 function transform() {
-    console.log(data)
+    data.users.map(user => {
+        return [weeklyGoals(user), dailyAssessment(user), weeklyReflection(user)]
+    })
+}
+
+function weeklyGoals(user) {
+
+}
+
+function dailyAssessment(user) {
+     
+}
+
+function weeklyReflection(user) {
+
+}
+
+function postPayload() {
+
 }
 
 // const BASE_URL = 'https://rails-vision-backend.herokuapp.com'
