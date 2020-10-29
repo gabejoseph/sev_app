@@ -1,6 +1,14 @@
-// export const userService = {
-//     login
-// };
+import React from 'react'
+import { data } from '../components/data'
+
+
+export const services = {
+    transform
+}
+
+function transform() {
+    console.log(data)
+}
 
 // const BASE_URL = 'https://rails-vision-backend.herokuapp.com'
 
