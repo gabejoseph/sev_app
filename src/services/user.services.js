@@ -6,8 +6,10 @@ export const services = {
     transform
 }
 
-const topics = data.topics
+const assessment = data.topics
+const weekly_count = assessment[1].weekly_count
 const payload = []
+console.log(payload)
 
 function transform() {
     data.users.map(user => {
@@ -18,23 +20,33 @@ function transform() {
 function handleLogic(user) {
     payload.push(
         {
-            name: "Weekly Reflection",
-            topic: `${topic._id}`,
+            name: "Weekly Goals",
+            // topic: `${topic._id}`,
             status: "waiting",
             user: `${user._id}`
         },
         handleAssessment(user),
         {
             name: "Weekly Reflection",
-            topic: `${topic._id}`,
+            // topic: `${topic._id}`,
             status: "waiting",
             user: `${user._id}`
         }
     )
 }
 
-function handleAssessment (topic) {
+function handleAssessment(user) {
+    for (let index = 0; index < weekly_count; index++) {
+        payload.push(
+            {
+                name: "Daily Assessment",
+                // topic: `${topic._id}`,
+                status: "waiting",
+                user: `${user._id}`
+            }
+        )
         
+    }
 }
 
 function postPayload() {
