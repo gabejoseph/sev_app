@@ -7,8 +7,8 @@ export const services = {
 }
 
 
-let epoch = new Date('2016-10-11').getTime()
-console.log(epoch)
+// let epoch = new Date('2016-10-11').getTime()
+// console.log(epoch)
 
 
 function transform() {
@@ -21,25 +21,26 @@ function transform() {
 }
 
 function generateTasks(weekly_count) {
-    const assessment = data.topics
+    const weekly_goals = data.topics[0]
+    const weekly_reflection = data.topics[2]
     const users = data.users
     const offset = new Date().getTimezoneOffset()*60000;
-    console.log(offset);
+    console.log(offset, "offset");
 
     const payload = users.reduce( (acc, user) => {
         return acc.concat([
             {
                 name: "Weekly Goals",
-                topic: `${assessment[0]._id}`,
+                topic: `${weekly_goals._id}`,
                 status: "waiting",
-                date: new Date(`${assessment[0].start_day}`).getTime() + offset,
+                date: new Date(`${weekly_goals.start_day}`) + offset,
                 user: `${user._id}`
             },
             {
                 name: "Weekly Reflection",
-                topic: `${assessment[2]._id}`,
+                topic: `${weekly_reflection._id}`,
                 status: "waiting",
-                date: new Date(`${assessment[2].start_day}`).getTime() + offset,
+                date: new Date(`${weekly_reflection.start_day}`) + offset,
                 user: `${user._id}`
             },
             ...handleAssessment(user, weekly_count)
@@ -50,23 +51,27 @@ function generateTasks(weekly_count) {
 }
 
 function handleAssessment(user, weekly_count) {
-    const assessment = data.topics
+    const daily_assessment = data.topics[1]
     const payload = []
     const offset = new Date().getTimezoneOffset()*60000;
-    console.log(offset);
+    // console.log(data.topics[1], assessment);
     for (let index = 0; index <= weekly_count; index++) {
         payload.push(
             {
                 name: "Daily Assessment",
-                topic: `${assessment[1]._id}`,
+                topic: `${daily_assessment._id}`,
                 status: "waiting",
-                date: new Date(`${assessment[1].start_day}`).getTime() + offset,
+                date: new Date(`${daily_assessment.start_day}`) + offset,
                 user: `${user._id}`
             }
         )
         
     }
     return payload
+}
+
+function handleDate(start_day_init, weekly_count, hour, offset) {
+
 }
 
 function postPayload(payload) {
@@ -81,9 +86,9 @@ function postPayload(payload) {
     };
 
     return fetch(`${BASE_URL}/sessions`, requestOptions)
-        .then(response => response.json)
-        .then(data => {
-            console.log(data)            
-        });
+        // .then(response => response.json)
+        // .then(data => {
+        //     console.log(data)            
+        // });
 }
 
