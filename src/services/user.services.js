@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { data } from '../components/data'
 
 
@@ -6,53 +6,71 @@ export const services = {
     transform
 }
 
-const assessment = data.topics
-const weekly_count = assessment[1].weekly_count
-const payload = []
-const BASE_URL = 'https://925ee3c8729541b8407aaee847ab21b6.m.pipedream.net'
 
-console.log(payload)
+let epoch = new Date('2016-10-11').getTime()
+console.log(epoch)
+
 
 function transform() {
-    data.users.map(user => {
-        handleLogic(user)
-    })
+    const assessment = data.topics
+    const weekly_count = assessment[1].weekly_count - 1
+    generateTasks(weekly_count)
+    // data.users.forEach(user => 
+    //     handleLogic(user, weekly_count)
+    // )
 }
 
-function handleLogic(user) {
-    payload.push(
-        {
-            name: "Weekly Goals",
-            // topic: `${topic._id}`,
-            status: "waiting",
-            user: `${user._id}`
-        },
-        handleAssessment(user),
-        {
-            name: "Weekly Reflection",
-            // topic: `${topic._id}`,
-            status: "waiting",
-            user: `${user._id}`
-        }
-    )
+function generateTasks(weekly_count) {
+    const assessment = data.topics
+    const users = data.users
+    const offset = new Date().getTimezoneOffset()*60000;
+    console.log(offset);
+
+    const payload = users.reduce( (acc, user) => {
+        return acc.concat([
+            {
+                name: "Weekly Goals",
+                topic: `${assessment[0]._id}`,
+                status: "waiting",
+                date: new Date(`${assessment[0].start_day}`).getTime() + offset,
+                user: `${user._id}`
+            },
+            {
+                name: "Weekly Reflection",
+                topic: `${assessment[2]._id}`,
+                status: "waiting",
+                date: new Date(`${assessment[2].start_day}`).getTime() + offset,
+                user: `${user._id}`
+            },
+            ...handleAssessment(user, weekly_count)
+        ])
+    }, [])
+
     postPayload(payload)
 }
 
-function handleAssessment(user) {
-    for (let index = 0; index < weekly_count; index++) {
+function handleAssessment(user, weekly_count) {
+    const assessment = data.topics
+    const payload = []
+    const offset = new Date().getTimezoneOffset()*60000;
+    console.log(offset);
+    for (let index = 0; index <= weekly_count; index++) {
         payload.push(
             {
                 name: "Daily Assessment",
-                // topic: `${topic._id}`,
+                topic: `${assessment[1]._id}`,
                 status: "waiting",
+                date: new Date(`${assessment[1].start_day}`).getTime() + offset,
                 user: `${user._id}`
             }
         )
         
     }
+    return payload
 }
 
 function postPayload(payload) {
+    const BASE_URL = 'https://925ee3c8729541b8407aaee847ab21b6.m.pipedream.net'
     const requestOptions = {
         method: 'POST',
         headers: {
