@@ -7,8 +7,8 @@ export const services = {
 }
 
 
-// let epoch = new Date('2016-10-11').getTime()
-// console.log(epoch)
+// let epoch = new Date(`1`).getDay()
+// console.log(epoch, "epoch")
 
 
 function transform() {
@@ -70,9 +70,15 @@ function handleAssessment(user, weekly_count) {
     return payload
 }
 
-function handleDate(start_day_init, weekly_count, hour, offset) {
-
-}
+// function handleDate(start_day_init, weekly_count, hour, offset) {
+//     const year = 2020
+//     const month = 'October'
+//     const day = start_day_init + 1
+//     const hourTimeStamp = hour
+//     const newDate = new Date(`${month} ${day}, ${year} ${hourTimeStamp}:00:00`).getTime() + offset
+//     console.log("handleDate")
+//     return newDate
+// }
 
 function postPayload(payload) {
     const BASE_URL = 'https://925ee3c8729541b8407aaee847ab21b6.m.pipedream.net'
